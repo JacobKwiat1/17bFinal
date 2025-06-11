@@ -18,7 +18,6 @@ function LoginForm() {
         </p>";
         include('includes/footer.php');
 }
-
 // Regex rules
 $unameRegex = '/^[a-zA-Z0-9._-]{3,15}$/';
 $passRegex = '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/';
@@ -43,7 +42,10 @@ $passRegex = '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/';
 
     if ($result && $result->num_rows === 1) {
         $row = $result->fetch_assoc();
-        $_SESSION["admin"] = $row["admin"];
+        if(isset($_SESSION['admin']) && $_SESSION['admin'] != $row['admin']) {
+            $_SESSION["admin"] = $row["admin"];
+            echo "<script> window.location.reload();</script>";
+        }
         if(!(isset($_SESSION[$username."start"])) || $_SESSION[$username."start"] == -1) {
         $_SESSION[$username."start"] = time();
         $time = $_SESSION[$username."start"];
@@ -61,9 +63,7 @@ $passRegex = '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/';
         }
     } else {
         echo "<span class='error'>could not find user with associated username and password</span>";
-        LoginForm();
-        exit();
     }
-    loginForm();
 }
+LoginForm();
 ?>
