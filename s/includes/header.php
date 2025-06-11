@@ -12,7 +12,7 @@
                 <li><a href="landing.php"><h1>landing</h1></a></li>
                 <li><a href="login.php"><h1>login</h1></a></li>
                 <li><a href="signup.php"><h1>sign up</h1></a></li>
-                <?php if($_SESSION['admin'] == 1) {
+                <?php if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
                 echo "<li><a href='admin.php'><h1>admin</h1></a></li>";
                 }
                 ?>
